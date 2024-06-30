@@ -9,7 +9,7 @@ from homeassistant.components.sensor import (
     SensorEntity,
     SensorDeviceClass,
 )
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from iolite_client.client import Client
 from iolite_client.entity import HumiditySensor, Room
