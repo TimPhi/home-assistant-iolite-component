@@ -51,7 +51,7 @@ class HumidityEntity(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self.sensor = sensor
         self.client = client
-        self._attr_unique_id = sensor.identifier
+        self._attr_unique_id = sensor.identifier + "Humidity"
         self._attr_name = f"{self.sensor.name} ({room.name})"
         self._attr_device_info = {
             "identifiers": {(DOMAIN, self._attr_unique_id)},
@@ -83,7 +83,7 @@ class TemperatureEntity(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self.sensor = sensor
         self.client = client
-        self._attr_unique_id = sensor.identifier
+        self._attr_unique_id = sensor.identifier + "Temperature"
         self._attr_name = f"{self.sensor.name} ({room.name})"
         self._attr_device_info = {
             "identifiers": {(DOMAIN, self._attr_unique_id)},
