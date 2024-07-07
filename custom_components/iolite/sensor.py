@@ -33,7 +33,8 @@ async def async_setup_entry(
         for device in room.devices.values():
             if isinstance(device, HumiditySensor):
                 devices.append(
-                    HumidityEntity(coordinator, device, room, coordinator.client)
+                    HumidityEntity(coordinator, device, room, coordinator.client),
+                    TemperatureEntity(coordinator, device, room, coordinator.client)
                 )
 
     for device in devices:
@@ -59,6 +60,7 @@ class HumidityEntity(CoordinatorEntity, SensorEntity):
             "manufacturer": self.sensor.manufacturer,
         }
         self.attr_device_class = SensorDeviceClass.HUMIDITY
+        self.attr_native_unit_of_measurement = "%"
         self._update_state()
 
     @callback
@@ -75,3 +77,35 @@ class HumidityEntity(CoordinatorEntity, SensorEntity):
     def _update_state(self):
         sensor: HumiditySensor = self.room.devices[self.sensor.identifier]
         self._attr_native_value = sensor.humidity_level
+
+class TemperatureEntity(CoordinatorEntity, SensorEntity):
+
+    def __init__(self, coordinator, sensor: HumiditySensor, room: Room, client: Client):
+        super().__init__(coordinator)
+        self.sensor = sensor
+        self.client = client
+        self._attr_unique_id = sensor.identifier
+        self._attr_name = f"{self.sensor.name} ({room.name})"
+        self._attr_device_info = {
+            "identifiers": {(DOMAIN, self._attr_unique_id)},
+            "name": self._attr_name,
+            "manufacturer": self.sensor.manufacturer,
+        }
+        self.attr_device_class = SensorDeviceClass.TEMPERATURE
+        self.attr_native_unit_of_measurement = "°C"
+        self._update_state()
+
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+        self._update_state()
+        self.async_write_ha_state()
+
+    @property
+    def room(self) -> Room:
+        """Return device data object from coordinator."""
+        return self.coordinator.data[self.sensor.place_identifier]
+
+    def _update_state(self):
+        sensor: HumiditySensor = self.room.devices[self.sensor.identifier]
+        self._attr_native_value = sensor.current_env_temp
