@@ -8,8 +8,10 @@ from homeassistant import config_entries
 from homeassistant.components.sensor import (
     SensorEntity,
     SensorDeviceClass,
+    SensorStateClass,
 )
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.const import UnitOfTemperature, PERCENTAGE
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from iolite_client.client import Client
 from iolite_client.entity import HumiditySensor, Room
@@ -58,8 +60,9 @@ class HumidityEntity(CoordinatorEntity, SensorEntity):
             "name": self._attr_name,
             "manufacturer": self.sensor.manufacturer,
         }
+        self._attr_native_unit_of_measurement = PERCENTAGE
         self.attr_device_class = SensorDeviceClass.HUMIDITY
-        self.attr_native_unit_of_measurement = "%"
+        self.attr_state_class = SensorStateClass.MEASUREMENT
         self._update_state()
 
     @callback
@@ -90,8 +93,9 @@ class TemperatureEntity(CoordinatorEntity, SensorEntity):
             "name": self._attr_name,
             "manufacturer": self.sensor.manufacturer,
         }
+        self._attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
         self.attr_device_class = SensorDeviceClass.TEMPERATURE
-        self.attr_native_unit_of_measurement = "°C"
+        self.attr_state_class = SensorStateClass.MEASUREMENT
         self._update_state()
 
     @callback
