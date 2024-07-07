@@ -33,7 +33,9 @@ async def async_setup_entry(
         for device in room.devices.values():
             if isinstance(device, HumiditySensor):
                 devices.append(
-                    HumidityEntity(coordinator, device, room, coordinator.client),
+                    HumidityEntity(coordinator, device, room, coordinator.client)
+                )
+                devices.append(
                     TemperatureEntity(coordinator, device, room, coordinator.client)
                 )
 
