@@ -9,6 +9,7 @@ from homeassistant.components.cover import (
     ATTR_POSITION,
     CoverEntity,
     CoverEntityFeature,
+    CoverDeviceClass,
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -71,6 +72,7 @@ class BlindEntity(CoordinatorEntity, CoverEntity):
             "name": self._attr_name,
             "manufacturer": self.blind.manufacturer,
         }
+        self._attr_device_class = CoverDeviceClass.SHADE
 
     @property
     def room(self) -> Room:
