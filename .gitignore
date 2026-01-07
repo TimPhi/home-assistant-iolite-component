@@ -1,24 +1,6 @@
-# IDE
-/.vscode/
-/.idea/
-
-# Secrets
-/.env
-access_token.json
-access_token_*.json
-
-# Cache
-__pycache__
-/.pytest_cache/
-
-# Dist
-/build/
-/dist/
-*.egg-info
-
-# Coverage
-/coverage.xml
+/.venv/
+__pycache__/
 /.coverage
-
-# Jupyter
-.ipynb_checkpoints
+/.mypy_cache/
+/.pytest_cache/
+.idea
