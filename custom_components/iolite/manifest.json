@@ -9,7 +9,7 @@
   "documentation": "https://github.com/inverse/home-assistant-iolite-component",
   "iot_class": "cloud_polling",
   "requirements": [
-      "python-iolite-client@git+https://github.com/TimPhi/python-iolite-client.git@master#python-iolite-client"
+      "iolite-client@git+https://github.com/TimPhi/python-iolite-client.git@master#python-iolite-client"
   ],
   "version": "0.1.1"
 }
