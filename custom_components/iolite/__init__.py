@@ -49,8 +49,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         password, 
         storage,
         scan_interval_seconds,
-        client_id
-        verify_ssl
+        client_id,
+        verify_ssl,
     )
 
     await coordinator.async_config_entry_first_refresh()
